@@ -1,6 +1,6 @@
 # The Ultimate Amazon Bedrock Masterclass (2026 Edition)
 
-Welcome to the **Ultimate Amazon Bedrock Masterclass**, a comprehensive production-grade curriculum designed to take you from a cloud developer to an enterprise AI systems architect. 
+Welcome to the **Ultimate Amazon Bedrock Masterclass**, a comprehensive production-grade curriculum designed to take you from a cloud developer to an enterprise AI systems architect.
 
 This repository contains all the curriculum docs, code samples, backend APIs, client frontends, and infrastructure blueprints needed to build and scale production-ready applications with **Amazon Bedrock**.
 
@@ -44,6 +44,7 @@ This repository contains all the curriculum docs, code samples, backend APIs, cl
 ## 🛠️ Getting Started
 
 ### Local Setup
+
 Clone this repository and follow the setup instructions in the lessons:
 
 ```bash
@@ -55,4 +56,5 @@ cd amazon-bedrock-masterclass
 ```
 
 ## 📜 License
+
 This project is licensed under the [MIT License](LICENSE).
