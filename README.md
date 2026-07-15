@@ -43,20 +43,131 @@ While this course uses **Amazon Bedrock** as the primary platform, it teaches tr
 
 ## 🛠️ Getting Started
 
-### Local Setup
+### 1. Credentials Configuration
 
-Clone this repository and configure your credentials:
+Clone the repository and set up your AWS credentials named profile:
 
 ```bash
 # Clone the repository
 git clone https://github.com/prakashsejwani/amazon-bedrock-masterclass.git
 cd amazon-bedrock-masterclass
 
-# Configure your AWS credentials profile
+# Configure your personal developer credentials profile
 aws configure --profile personal
 ```
 
-Refer to [Lesson 003](lessons/003-dev-setup.md) to set up your local Ruby on Rails and Next.js developer workspaces.
+### 2. Running Rails & Next.js (Node.js) Together
+
+To run the full stack locally with active AI integration integrations:
+
+#### Terminal 1: Ruby on Rails 8 Backend API
+
+```bash
+cd code/rails
+
+# Install server dependencies
+bundle install
+
+# Run database migrations
+bundle exec rails db:migrate
+
+# Start the Rails API server on port 3001
+bundle exec rails server -p 3001
+```
+
+#### Terminal 2: Next.js 16 (Node.js) Frontend Client
+
+```bash
+cd code/nextjs
+
+# Install node dependencies
+npm install
+
+# Start the Next.js development server
+npm run dev
+```
+
+Open your browser and navigate to `http://localhost:3000`. The frontend will communicate directly with the Rails API backend running at `http://localhost:3001`.
+
+---
+
+### 3. Under the Hood: How the AI Integration Works
+
+```text
++-------------------+                    +--------------------+                    +======================+
+| Next.js Client UI | =================> | Rails Backend API  | =================> |  AWS Bedrock Gateway |
+| (Port 3000)       |   Converse Query   | (Port 3001)        |   SigV4 API Call   | (Virginia / Oregon)  |
++-------------------+                    +--------------------+                    +======================+
+          ^                                        ||                                         ||
+          ||                                       ||                                         ||
+          ||                                       \/                                         \/
+          ||                              +--------------------+                     +--------------------+
+          ||                              | AWS SDK Client     | <================== | Response Stream    |
+          =============================== | (SigV4 Personal)   |  Server-Sent Events | (Model Completion) |
+                Token Delta Streams       +--------------------+                     +--------------------+
+```
+
+1. **User Action**: When you input a chat prompt, trigger a security safety check, or run an orchestration task, the Next.js client initiates a `POST` request to the Rails API backend.
+2. **SigV4 Authentication**: The Rails app instantiates the AWS SDK client, loads your local `personal` profile credentials, and automatically formats, signs, and authorizes the HTTP query using the **AWS Signature Version 4 (SigV4)** signing standard.
+3. **Bedrock Invocations**: The query is sent to Amazon Bedrock endpoints (e.g. `converse` or `invoke_agent`). Bedrock processes the query, applying Guardrail checks and RAG retrieval pipelines natively.
+4. **Server-Sent Events (SSE)**: Bedrock streams the response tokens back to Rails. The Rails controller intercepts this stream and proxies it in real time to the Next.js client browser using standard **Server-Sent Events (SSE)**.
+
+---
+
+### 4. Deploying to Production on AWS (Amazon Bedrock)
+
+When ready to transition from local development to AWS, follow this production architecture:
+
+```text
++--------------+      HTTPS       +---------------------+      Private IP      +------------------------+
+|  User Client | ===============> | Application Load    | ===================> | ECS Tasks (AWS Fargate)|
+|  (Browser)   |                  | Balancer (ALB)      |                      | (Rails & Next.js)      |
++--------------+                  +---------------------+                      +------------------------+
+                                                                                           ||
+                                                                                           || KMS / IAM Auth
+                                                                                           \/
++----------------------+          +----------------------+                     +========================+
+| Amazon RDS Postgres  | <======= | Amazon S3 Audit      | <================== | AWS Bedrock Service    |
+| (pgvector enabled)   |   VPC    | (KMS Encrypted logs) |                     | (Models/Agents/Guard)  |
++----------------------+          +----------------------+                     +========================+
+```
+
+#### A. Containerizing the Runtimes
+
+- Build and push Docker images for `code/rails` and `code/nextjs` to **Amazon Elastic Container Registry (ECR)**.
+- Deploy the container instances to **Amazon Elastic Container Service (ECS)** on **AWS Fargate** or **AWS App Runner** for serverless scaling.
+
+#### B. Provisioning Databases
+
+- Deploy an **Amazon RDS PostgreSQL** instance inside your private VPC.
+- Enable the **`pgvector` extension** to host high-dimensional semantic search indexes for RAG integrations.
+
+#### C. Setting up IAM Policies
+
+Attach an **IAM Task Role** directly to your ECS Tasks. Never hardcode access keys. The Task Role must allow access to Bedrock APIs:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream",
+        "bedrock:Retrieve",
+        "bedrock:InvokeAgent"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+#### D. Logging & Auditing
+
+- Enable **Model Invocation Logging** pointing to an Amazon S3 bucket encrypted with AWS KMS.
+- Pipe execution logs to Amazon CloudWatch for error rates monitoring and latency alerts.
 
 ## 🎥 Publication & Media Pipelines
 
