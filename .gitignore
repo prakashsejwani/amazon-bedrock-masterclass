@@ -48,3 +48,10 @@ build/
 *.gem
 *.epub
 *.pdf
+book/book.md
+book/book.html
+video/frames/
+video/tutorial.mp4
+video/voiceover.mp3
+__pycache__/
+*.pyc
