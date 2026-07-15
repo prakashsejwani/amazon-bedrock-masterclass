@@ -19,6 +19,9 @@ out/
 /code/rails/db/*.sqlite3
 /code/rails/db/*.sqlite3-journal
 /code/rails/db/*.sqlite3-wal
+/code/rails/storage/*.sqlite3
+/code/rails/storage/*.sqlite3-journal
+/code/rails/storage/*.sqlite3-wal
 /code/rails/public/assets
 .bundle/
 vendor/bundle

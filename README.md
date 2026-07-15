@@ -71,6 +71,9 @@ bundle install
 # Run database migrations
 bundle exec rails db:migrate
 
+# Seed database with sample metrics & audit logs
+bundle exec rails db:seed
+
 # Start the Rails API server on port 3001
 bundle exec rails server -p 3001
 ```
