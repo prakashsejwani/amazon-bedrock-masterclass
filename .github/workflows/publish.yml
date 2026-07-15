@@ -1,0 +1,32 @@
+name: Publish Book CI
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pandoc & PDF engines
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc weasyprint
+
+      - name: Compile PDF and EPUB
+        run: |
+          mkdir -p output
+          # Example pandoc execution compiling all lesson markdowns
+          # In a real environment, we'd list them sequentially
+          pandoc README.md lessons/*.md -o output/amazon-bedrock-masterclass.epub --metadata title="Amazon Bedrock Masterclass"
+          pandoc README.md lessons/*.md -o output/amazon-bedrock-masterclass.pdf --pdf-engine=weasyprint --metadata title="Amazon Bedrock Masterclass"
+        continue-on-error: true
+
+      - name: Upload Book Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-masterclass-book
+          path: output/

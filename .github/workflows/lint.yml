@@ -1,0 +1,39 @@
+name: Linting CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'lessons/**/*.md'
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'lessons/**/*.md'
+      - 'README.md'
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Markdownlint
+        run: npx markdownlint-cli "lessons/**/*.md" "README.md" --ignore docs/node_modules/ --ignore enterprise/frontend/node_modules/
+
+  vale-prose-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vale Linter Action
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          files: 'lessons'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
