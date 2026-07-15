@@ -58,6 +58,59 @@ aws configure --profile personal
 
 Refer to [Lesson 003](lessons/003-dev-setup.md) to set up your local Ruby on Rails and Next.js developer workspaces.
 
+## 🎥 Publication & Media Pipelines
+
+We have automated the publishing of our course materials into PDF books and video tutorials.
+
+### 1. Compiling the Printable PDF Book
+
+To concatenate all 18 lessons and generate a styled, print-ready book:
+
+```bash
+python book/compile.py
+```
+
+- This compiles all chapters into `book/book.md`.
+- It creates `book/book.html`, configured with margins, cover sheets, and print-breaks defined in `book/styles.css`.
+- Open `book/book.html` in Chrome and use "Print to PDF" to generate a beautiful, print-ready document.
+
+### 2. Generating Video Screencasts & AI Voiceovers
+
+To simulate interactive browser actions, record screens, synthesize voiceover tracks, and stitch them into video files:
+
+1. **Capture Browser Frame Sequences**:
+
+   ```bash
+   node video/screencast.js
+   ```
+
+2. **Synthesize Audio Narration Track (Amazon Polly)**:
+
+   ```bash
+   python video/voiceover.py "Welcome to Enterprise AI Engineering with Bedrock."
+   ```
+
+3. **Stitch Frames and Audio into MP4**:
+
+   ```bash
+   ./video/stitch.sh
+   ```
+
+   *Generates `video/tutorial.mp4`.*
+
+### 3. Publishing to the NextwareSystems YouTube Channel
+
+We utilize the YouTube Data API v3 to automate uploads:
+
+1. Obtain your OAuth 2.0 Credentials from the Google API Console and save them to `video/client_secrets.json`.
+2. Run the uploader script to publish:
+
+   ```bash
+   python video/upload_youtube.py video/tutorial.mp4 "Enterprise AI Engineering: Lesson 014" "Description of lesson..."
+   ```
+
+---
+
 ## 📜 License
 
 This project is licensed under the [MIT License](LICENSE).
