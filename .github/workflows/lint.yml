@@ -24,7 +24,7 @@ jobs:
           node-version: 22
 
       - name: Run Markdownlint
-        run: npx markdownlint-cli "lessons/**/*.md" "README.md" --ignore docs/node_modules/ --ignore enterprise/frontend/node_modules/
+        run: npx markdownlint-cli "lessons/**/*.md" "README.md" --ignore docs/node_modules/ --ignore code/nextjs/node_modules/
 
   vale-prose-lint:
     runs-on: ubuntu-latest

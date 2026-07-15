@@ -338,40 +338,11 @@ Extend the Rails `SecureChatsController` to send a notification (e.g., Slack Web
 
 ## Quiz
 
-1. **Why is it preferred to use a Guardrail over system prompts to block forbidden topics?**
-   - A) Guardrails cost less than system prompts
-   - B) Guardrails run independently of model context, preventing prompt injection bypasses
-   - C) Guardrails allow larger output tokens
-   - D) Guardrails increase generation temperature
-
-2. **Which stop reason is returned by the Bedrock API when a query is blocked by a guardrail policy?**
-   - A) `safety_block`
-   - B) `content_filter`
-   - C) `guardrail_intervened`
-   - D) `pii_redacted`
-
-3. **What PII action anonymizes text inputs (e.g., replacing emails with `[EMAIL]`) instead of terminating the request?**
-   - A) `BLOCK`
-   - B) `ANONYMIZE`
-   - C) `MASK_MD5`
-   - D) `REPLACE_EMPTY`
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 016 Quiz](../quizzes/lesson-016-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain the difference between PII 'BLOCK' and PII 'ANONYMIZE' actions inside a Bedrock Guardrail policy, and when you use each.**
-
-*Answer*:
-
-- **PII BLOCK**: Immediately halts request execution. If PII (such as a credit card number) is detected, the API stops generation and returns a `stop_reason: "guardrail_intervened"`, serving the configured blocked message. Use this for high-risk data compliance constraints (e.g., stopping users from inputting raw credit card numbers or passwords).
-- **PII ANONYMIZE**: Replaces the PII value in the prompt text with a generic classification label (e.g., replacing `"john@gmail.com"` with `"[EMAIL]"`) and forwards the sanitized prompt to the LLM. Use this when you still want the model to process the request (e.g., writing a summary of an email) without exposing the raw private data values.
-
----
+See [Lesson 016 Interview Questions](../interview/lesson-016-interview.md).
 
 ## Best Practices & Production Notes
 

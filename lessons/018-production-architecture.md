@@ -284,37 +284,11 @@ Extend the Rails `HaModelRouterService` to track successive model errors in redi
 
 ## Quiz
 
-1. **What is the primary benefit of Bedrock Cross-Region Inference?**
-   - A) It is cheaper than single-region execution
-   - B) It automatically load-balances traffic across multiple AWS regions to reduce throttling and increase quota limits
-   - C) It translates request payloads into multiple languages
-   - D) It does not require IAM permissions
-
-2. **Why is 'Jitter' added to exponential backoff loops?**
-   - A) To increase model temperature
-   - B) To compress prompt vectors
-   - C) To randomize retry delays, preventing multiple clients from hitting the server simultaneously
-   - D) To redact PII data
-
-3. **What unit of measurement represents reserved capability blocks in Bedrock Provisioned Throughput?**
-   - A) Token Rate Units (TRU)
-   - B) Model Units (MU)
-   - C) Inference Units (IU)
-   - D) Query Units (QU)
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 018 Quiz](../quizzes/lesson-018-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain the Circuit Breaker pattern in LLM system architectures, and why it is critical.**
-
-*Answer*: The Circuit Breaker pattern prevents an application from repeatedly calling an upstream service that is currently down or failing (e.g. a model experiencing a major outage or severe throttling). Instead of forcing every user request to wait for a 10-second timeout, the circuit breaker "trips" (opens) after a defined error threshold is reached. Subsequent requests immediately fail or route to a fallback endpoint (e.g. switching from Claude to Llama, or switching from Bedrock to a backup OpenAI endpoint) without hitting the broken upstream service. Once a recovery timeout expires, the circuit breaker allows a few probe requests to pass (half-open state) and fully closes if they succeed.
-
----
+See [Lesson 018 Interview Questions](../interview/lesson-018-interview.md).
 
 ## Best Practices & Production Notes
 

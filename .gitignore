@@ -6,7 +6,7 @@
 # Node/Next.js
 node_modules/
 /docs/.next/
-/enterprise/frontend/.next/
+/code/nextjs/.next/
 out/
 .next-env.d.ts
 .npm
@@ -14,12 +14,12 @@ out/
 *.tsbuildinfo
 
 # Ruby on Rails
-/enterprise/backend/log/*.log
-/enterprise/backend/tmp/
-/enterprise/backend/db/*.sqlite3
-/enterprise/backend/db/*.sqlite3-journal
-/enterprise/backend/db/*.sqlite3-wal
-/enterprise/backend/public/assets
+/code/rails/log/*.log
+/code/rails/tmp/
+/code/rails/db/*.sqlite3
+/code/rails/db/*.sqlite3-journal
+/code/rails/db/*.sqlite3-wal
+/code/rails/public/assets
 .bundle/
 vendor/bundle
 bin/bundle

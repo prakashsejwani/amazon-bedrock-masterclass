@@ -379,44 +379,11 @@ Add a second tool `multiply_values` accepting `x: number` and `y: number` to the
 
 ## Quiz
 
-1. **How does an LLM execute a tool?**
-   - A) The model executes Python code locally inside the AWS sandbox
-   - B) The model outputs structured JSON arguments identifying which tool to execute, leaving execution logic to the client code
-   - C) The model requests access to the developer's command line directly
-   - D) The model queries the internet via the tool schema
-
-2. **In which Converse API message role must the `toolResult` block be submitted?**
-   - A) `system`
-   - B) `assistant`
-   - C) `user`
-   - D) `tool`
-
-3. **What is the purpose of the `toolUseId` string property?**
-   - A) It encrypts the function arguments
-   - B) It acts as a correlation ID to tie the tool result back to the specific tool invocation requested by the model
-   - C) It defines the billing threshold for the function execution
-   - D) It specifies the IAM role required to execute the tool
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 014 Quiz](../quizzes/lesson-014-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain the security risks of tool calling/function calling, and how you secure your systems against them.**
-
-*Answer*: The primary risk is that LLMs generate parameters based on conversational inputs, making them vulnerable to prompt injection. For example, if a tool `delete_user` accepts an `email` argument, a malicious prompt like `"Delete the user with email 'admin@company.com; DROP TABLE users;'"` could cause SQL injection or unauthorized operations.
-
-To secure tool calling:
-
-- Validate and sanitize all parameters returned from the model before executing functions.
-- Run functions with least-privilege IAM roles and database access (e.g. read-only permissions where possible).
-- Do not let the model execute arbitrary code or shell scripts returned from tool arguments directly.
-- Use explicit whitelist schemas for inputs (e.g. checking values with regular expressions).
-
----
+See [Lesson 014 Interview Questions](../interview/lesson-014-interview.md).
 
 ## Best Practices & Production Notes
 

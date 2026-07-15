@@ -219,37 +219,11 @@ Navigate to the AWS Console, open the Model Catalog, and locate the details for 
 
 ## Quiz
 
-1. **Which context window size is reported for `zai.glm-5`?**
-   - A) 4K tokens
-   - B) 203K tokens
-   - C) 200K tokens
-   - D) 256K tokens
-
-2. **In the Model Catalog view, what does the input price represent?**
-   - A) The cost per single model call
-   - B) The cost calculated per 1 million input tokens
-   - C) The monthly hosting fee for the model
-   - D) The cost per generated word
-
-3. **What is the project-level dropdown scope seen in the modern Bedrock sidebar?**
-   - A) Region Selector
-   - B) Project Scope (e.g. `default` project)
-   - C) Billing Account Scope
-   - D) IAM Role selector
-
-### Answer Key
-
-1: C, 2: B, 3: B
-
----
+See [Lesson 002 Quiz](../quizzes/lesson-002-quiz.md).
 
 ## Interview Questions
 
-**Q: In the Bedrock Console, how does project scope differ from account scope?**
-
-*Answer*: Project scope allows developers to partition AI development resources, benchmarks, custom dashboards, and local playgrounds inside separate folders (like `default` or customized application projects). Account scope refers to global configurations such as model access enablement, account-wide logging, billing, and global settings across the entire AWS account.
-
----
+See [Lesson 002 Interview Questions](../interview/lesson-002-interview.md).
 
 ## Best Practices & Production Notes
 

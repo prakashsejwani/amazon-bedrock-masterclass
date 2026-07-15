@@ -302,38 +302,11 @@ Modify the Rails `ProfileExtractionService` to raise a validation exception if t
 
 ## Quiz
 
-1. **Which Bedrock Converse feature is utilized to enforce strict schema-based outputs?**
-   - A) System Prompts
-   - B) Tool Config (Function Calling)
-   - C) Converse Parameters
-   - D) InferenceConfig
-
-2. **In OpenAI Chat Completions, which property is configured to enable strict schema checks?**
-   - A) `json_schema` with `strict: true`
-   - B) `tool_choice: "auto"`
-   - C) `response_format: "json"`
-   - D) `schema_version: 1`
-
-3. **What Rails module is included to provide attributes validations on standard Ruby classes?**
-   - A) `ActiveRecord::Base`
-   - B) `ActiveModel::Validations`
-   - C) `ActionController::Live`
-   - D) `ActiveSupport::Concern`
-
-### Answer Key
-
-1: B, 2: A, 3: B
-
----
+See [Lesson 011 Quiz](../quizzes/lesson-011-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain how forcing structured outputs (JSON Schemas) differs from simply asking a model to "return JSON format" inside the prompt text.**
-
-*Answer*: Asking a model to return JSON in a text prompt relies entirely on the model's instruction-following accuracy. The model can still make mistakes, such as adding markdown comments (e.g. ` ```json `), omitting keys, or outputting trailing commas.
-Forcing structured outputs via schemas operates at the token-generation level. The API constraint engine alters the probability distribution of outgoing tokens to ensure that only characters forming a valid syntax structure matching the JSON Schema can be generated.
-
----
+See [Lesson 011 Interview Questions](../interview/lesson-011-interview.md).
 
 ## Best Practices & Production Notes
 

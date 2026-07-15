@@ -269,39 +269,11 @@ Extend the Rails `MonitoredChatsController` to trigger a CloudWatch Alarm alert 
 
 ## Quiz
 
-1. **Which metric tracks the execution time of a Bedrock invocation model call?**
-   - A) `InputTokenCount`
-   - B) `InvocationLatency`
-   - C) `InvocationErrorCount`
-   - D) `TotalTokens`
-
-2. **Why is it important to configure KMS encryption keys on Bedrock invocation logs?**
-   - A) Without KMS, logs cannot compile
-   - B) To ensure raw prompt and completion texts (which might contain sensitive user PII) are encrypted at rest
-   - C) To speed up log delivery
-   - D) To bypass IAM permission requirements
-
-3. **Where are large payload logs (exceeding CloudWatch limits) routed by the logging service?**
-   - A) Stored directly in the client application database
-   - B) Sent to an Amazon S3 staging bucket
-   - C) Dropped automatically
-   - D) Forwarded to CloudTrail
-
-### Answer Key
-
-1: B, 2: B, 3: B
-
----
+See [Lesson 017 Quiz](../quizzes/lesson-017-quiz.md).
 
 ## Interview Questions
 
-**Q: Contrast how Bedrock handles observability logging natively compared to custom gateway setups on OpenAI.**
-
-*Answer*: Bedrock provides a fully managed infrastructure-level logging engine via AWS config. By enabling **Model Invocation Logging**, all payloads are automatically intercepted at the gateway layer and securely routed to CloudWatch or S3 without modifying application source code.
-
-OpenAI does not have a native API logging sink. Developers must implement custom middleware proxies (e.g. LiteLLM, Langfuse, Portkey, or custom API gateways) to intercept request/response payloads, which increases infrastructure complexity and introduces single points of failure.
-
----
+See [Lesson 017 Interview Questions](../interview/lesson-017-interview.md).
 
 ## Best Practices & Production Notes
 

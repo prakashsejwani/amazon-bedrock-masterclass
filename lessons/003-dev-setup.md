@@ -98,7 +98,7 @@ Ensure it reports 3.4.x. Install the bundler and rails gems:
 gem install bundler rails
 ```
 
-We will structure the Rails API under the `enterprise/backend` directory.
+We will structure the Rails API under the `code/rails` directory.
 
 ### 2. Node.js & Next.js Setup
 
@@ -108,14 +108,14 @@ Verify Node.js version is v22+ (using `nvm` or `fnm`):
 node -v
 ```
 
-Ensure it reports v22.x or v24.x. We will structure the Next.js client under the `enterprise/frontend` directory.
+Ensure it reports v22.x or v24.x. We will structure the Next.js client under the `code/nextjs` directory.
 
 ### 3. Environment Variables Configuration
 
 We use dotenv files locally to specify configurations without hardcoding. Create a template file:
 
 ```text
-# enterprise/backend/.env
+# code/rails/.env
 AWS_REGION=us-east-1
 BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
 ```
@@ -158,35 +158,11 @@ aws sts get-caller-identity --profile sandbox
 
 ## Quiz
 
-1. **Which credential source is resolved first by the AWS SDK provider chain?**
-   - A) `~/.aws/credentials` file
-   - B) Environment Variables (`AWS_ACCESS_KEY_ID`, etc.)
-   - C) IAM Roles for Amazon EC2
-   - D) Secrets Manager Vault
-
-2. **What command is used to configure regional defaults and keys for the AWS CLI?**
-   - A) `aws setup`
-   - B) `aws credentials`
-   - C) `aws configure`
-   - D) `aws init`
-
-3. **True or False: Storing secret keys directly inside source control commits (git) is a recommended practice if the repository is private.**
-   - A) True
-   - B) False
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 003 Quiz](../quizzes/lesson-003-quiz.md).
 
 ## Interview Questions
 
-**Q: If you deploy a Rails app on AWS ECS, how does it authenticate with Bedrock without using `.env` files with secret keys?**
-
-*Answer*: In production, we do not pack secret keys into environments or source files. We assign an **ECS Task Role** to the container task. The AWS Ruby SDK automatically detects this environment and contacts the task metadata service endpoint to fetch temporary credentials (session token). This is the most secure method because credentials rotate automatically every few hours.
-
----
+See [Lesson 003 Interview Questions](../interview/lesson-003-interview.md).
 
 ## Best Practices & Production Notes
 
