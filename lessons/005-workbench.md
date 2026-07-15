@@ -266,37 +266,11 @@ Extend the React `ParameterSlider` component to include a text input block to co
 
 ## Quiz
 
-1. **Which parameter directly controls the diversity and creative randomness of model generations?**
-   - A) Top P
-   - B) Temperature
-   - C) Stop Sequences
-   - D) Max Tokens
-
-2. **When setting up an Automatic Model Evaluation job, where must the benchmark dataset be uploaded?**
-   - A) GitHub repository
-   - B) Local filesystem
-   - C) Amazon S3 bucket
-   - D) Secrets Manager
-
-3. **What happens when the model encounters one of your configured Stop Sequences?**
-   - A) It throws an API error
-   - B) It stops generating further tokens and immediately returns the result
-   - C) It erases the context window
-   - D) It restarts prompt processing
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 005 Quiz](../quizzes/lesson-005-quiz.md).
 
 ## Interview Questions
 
-**Q: If your model output is cut off midway through a sentence, which inference parameter should you check first?**
-
-*Answer*: The first parameter to check is **Max Tokens (or Max Output Length)**. If this parameter value is set too low, the model will cease generation once the output tokens limit is hit. You should increase this value or inspect the Stop Sequences parameter to ensure it is not triggering premature terminations.
-
----
+See [Lesson 005 Interview Questions](../interview/lesson-005-interview.md).
 
 ## Best Practices & Production Notes
 

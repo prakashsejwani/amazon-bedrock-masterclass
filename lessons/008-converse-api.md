@@ -291,37 +291,11 @@ Extend the Rails `ConversationsController` to store chat sessions inside the dat
 
 ## Quiz
 
-1. **Which Converse API parameter tracks system-wide constraints and assistant personas?**
-   - A) `messages`
-   - B) `system`
-   - C) `inferenceConfig`
-   - D) `additionalModelRequestFields`
-
-2. **In multi-turn conversation API calls, which roles must alternate sequentially inside the `messages` array?**
-   - A) `user` and `system`
-   - B) `system` and `assistant`
-   - C) `user` and `assistant`
-   - D) `admin` and `user`
-
-3. **What class is instantiated in the AWS Ruby SDK to authenticate using a specific profile name?**
-   - A) `Aws::Credentials`
-   - B) `Aws::SharedCredentials`
-   - C) `Aws::IAM::Role`
-   - D) `Aws::SecretsManager`
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 008 Quiz](../quizzes/lesson-008-quiz.md).
 
 ## Interview Questions
 
-**Q: Why does the Converse API accept an array of content blocks rather than a single string?**
-
-*Answer*: The Converse API is natively multimodal. By using an array of content blocks, a single message can support multiple input types simultaneously (e.g. passing a prompt text block, an image block, and a PDF document block). This removes the need to construct multi-part form payloads or encode images inside string templates manually.
-
----
+See [Lesson 008 Interview Questions](../interview/lesson-008-interview.md).
 
 ## Best Practices & Production Notes
 

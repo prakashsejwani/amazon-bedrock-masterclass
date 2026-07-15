@@ -14,24 +14,32 @@
 Selecting the correct model is a critical decision in system design. The "perfect model" does not exist; rather, systems architects must choose models based on specific task parameters.
 
 ### 1. Anthropic Claude Series
+
 The Claude family is optimized for advanced reasoning, complex coding, and agentic workflows.
+
 - **Claude 3.5 Sonnet**: The industry benchmark for code generation, complex tool usage, and visual analysis. Ideal for production agents.
 - **Claude 3.5 Haiku**: Exceptionally fast and cost-effective, optimized for high-volume text categorization and simple completions.
 - **Claude 3 Opus**: Optimized for extremely complex mathematical and scientific reasoning.
 
 ### 2. Amazon Nova Series
+
 Nova is Amazon’s flagship family of models, designed from the ground up to offer state-of-the-art multimodal reasoning, high speed, and low costs.
+
 - **Nova Micro**: Text-only, extremely fast, and cost-efficient. Designed for low-latency retrieval tasks.
 - **Nova Lite**: A highly efficient multimodal model. Excellent for processing video, image, and text at scale.
 - **Nova Pro**: Flagship multimodal model with deep analytical, translation, and coding capabilities.
 
 ### 3. Meta Llama Series
+
 Llama models represent Meta's open-weights contributions, hosted as a fully managed service on Bedrock.
+
 - **Llama 3.3 70B**: Top-tier reasoning and instruct capabilities, competing directly with much larger models.
 - **Llama 3.1 8B**: Lightweight and fast, ideal for summarization and low-compute tasks.
 
 ### 4. Mistral AI Series
+
 Mistral models offer excellent multilingual support and compact efficiency.
+
 - **Mistral Large**: Designed for complex reasoning and agent use cases.
 - **Mistral Small**: Low latency, lightweight model.
 
@@ -211,40 +219,11 @@ Extend the Next.js dropdown selector to render input cost per 1M tokens next to 
 
 ## Quiz
 
-1. **Which Bedrock model is best optimized for low-latency, high-volume classification tasks at extremely low cost?**
-   - A) Claude 3 Opus
-   - B) Nova Micro
-   - C) Llama 3.3 70B
-   - D) Mistral Large
-
-2. **What is the primary trade-off when selecting Claude 3.5 Sonnet over Nova Micro?**
-   - A) Claude supports fewer languages
-   - B) Claude has a smaller context window
-   - C) Claude provides much higher reasoning quality but at higher latency and cost
-   - D) Claude cannot be executed programmatically
-
-3. **How does storing Model IDs in AWS SSM Parameters benefit a production deployment?**
-   - A) It speeds up the model latency
-   - B) It allows you to switch model versions dynamically without rebuilding or redeploying code containers
-   - C) It is required by AWS IAM policy systems
-   - D) It reduces the input token count
-
-### Answer Key
-
-1: B, 2: C, 3: B
-
----
+See [Lesson 004 Quiz](../quizzes/lesson-004-quiz.md).
 
 ## Interview Questions
 
-**Q: If you are building a real-time conversational agent, how would you design a multi-model pipeline to optimize cost and performance?**
-
-*Answer*: I would employ a tiered routing strategy:
-- Use a lightweight, low-cost model like **Nova Micro** for initial query intent categorization and simple information retrieval tasks.
-- If the router detects that the query requires code analysis, complex reasoning, or database schema interactions, escalate the query to **Claude 3.5 Sonnet**.
-- Use **Nova Lite** if the user uploads images or documents. This keeps latency low and costs optimal, reserving high-cost reasoning models only for queries that truly require them.
-
----
+See [Lesson 004 Interview Questions](../interview/lesson-004-interview.md).
 
 ## Best Practices & Production Notes
 

@@ -347,37 +347,11 @@ Extend the Rails `AgentChatsController` to filter and strip out pre-processing a
 
 ## Quiz
 
-1. **What framework does Bedrock use to sequence agent reasoning and execution?**
-   - A) Chain of Thought (CoT)
-   - B) Reasoning and Acting (ReAct)
-   - C) Matryoshka prompt cuts
-   - D) JSON Schema Validation
-
-2. **In which trace category can you monitor the agent's tool invocation arguments?**
-   - A) Pre-Processing
-   - B) Orchestration
-   - C) Post-Processing
-   - D) Guardrail evaluation
-
-3. **What client namespace is instantiated to invoke Bedrock Agents at runtime?**
-   - A) `Aws::Bedrock::Client`
-   - B) `Aws::BedrockRuntime::Client`
-   - C) `Aws::BedrockAgent::Client`
-   - D) `Aws::BedrockAgentRuntime::Client`
-
-### Answer Key
-
-1: B, 2: B, 3: D
-
----
+See [Lesson 015 Quiz](../quizzes/lesson-015-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain how Amazon Bedrock Agents memory works and how sessions are maintained across multiple turns.**
-
-*Answer*: Bedrock Agents manage session state and memory automatically at the service layer using a unique `sessionId` string supplied in the runtime request. When the client makes successive calls to `InvokeAgent` using the same `sessionId`, the service reloads the conversation history (including observations and reasoning traces) from its internal state store. This eliminates the need for developers to save message logs in local databases or pass raw historical lists in every request.
-
----
+See [Lesson 015 Interview Questions](../interview/lesson-015-interview.md).
 
 ## Best Practices & Production Notes
 

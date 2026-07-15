@@ -328,44 +328,11 @@ Extend the Rails `RagSearchesController` to filter incoming results based on met
 
 ## Quiz
 
-1. **What is the difference between the `Retrieve` and `RetrieveAndGenerate` APIs?**
-   - A) `Retrieve` is faster; `RetrieveAndGenerate` is cheaper
-   - B) `Retrieve` only returns relevant document blocks; `RetrieveAndGenerate` retrieves blocks and uses an LLM to formulate an answer
-   - C) `Retrieve` only works on text; `RetrieveAndGenerate` only works on images
-   - D) `Retrieve` does not use a vector store
-
-2. **Which chunking strategy splits documents based on conceptual changes in topic rather than token length boundaries?**
-   - A) Fixed-size chunking
-   - B) Hierarchical chunking
-   - C) Semantic chunking
-   - D) SQL mapping chunking
-
-3. **Which AWS client namespace must be instantiated to query Knowledge Bases?**
-   - A) `Aws::Bedrock::Client`
-   - B) `Aws::BedrockRuntime::Client`
-   - C) `Aws::BedrockAgentRuntime::Client`
-   - D) `Aws::STS::Client`
-
-### Answer Key
-
-1: B, 2: C, 3: C
-
----
+See [Lesson 013 Quiz](../quizzes/lesson-013-quiz.md).
 
 ## Interview Questions
 
-**Q: Explain how you prevent hallucinations in a RAG pipeline deployed on Amazon Bedrock.**
-
-*Answer*: Halucinations in RAG occur when the model answers queries using its internal training weights instead of the retrieved document context.
-
-To prevent this:
-
-- Enforce strict system prompt guidelines (e.g., `"You are only allowed to answer questions using the provided context. If the answer is not present, state 'I cannot find the answer in the provided documents'"`).
-- Set Temperature to `0.0` to force deterministic matching.
-- Track retrieval relevance scores (e.g., only pass documents into prompt context if their cosine similarity score exceeds `0.75`).
-- Parse citation locations to display exactly which source document URL verified the output text block.
-
----
+See [Lesson 013 Interview Questions](../interview/lesson-013-interview.md).
 
 ## Best Practices & Production Notes
 

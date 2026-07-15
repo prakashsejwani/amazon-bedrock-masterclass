@@ -4,11 +4,11 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'enterprise/backend/**'
+      - 'code/rails/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'enterprise/backend/**'
+      - 'code/rails/**'
 
 jobs:
   test-rails:
@@ -28,8 +28,8 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
-        working-directory: enterprise/backend
+        working-directory: code/rails
 
       - name: Run Tests
         run: bundle exec rails test
-        working-directory: enterprise/backend
+        working-directory: code/rails

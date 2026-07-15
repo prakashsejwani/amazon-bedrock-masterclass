@@ -3,14 +3,14 @@
 ## Developer Workflows & Commands
 
 ### Backend (Ruby on Rails 8)
-- **Directory**: `enterprise/backend/`
+- **Directory**: `code/rails/`
 - **Install Dependencies**: `bundle install`
 - **Run Tests**: `bundle exec rails test`
 - **Run Server**: `bundle exec rails server -p 3001`
 - **Console**: `bundle exec rails console`
 
 ### Frontend (Next.js 16 Client & Docs Website)
-- **Directories**: `enterprise/frontend/` or `docs/`
+- **Directories**: `code/nextjs/` or `docs/`
 - **Install Dependencies**: `npm install`
 - **Run Dev Server**: `npm run dev`
 - **Build App**: `npm run build`
