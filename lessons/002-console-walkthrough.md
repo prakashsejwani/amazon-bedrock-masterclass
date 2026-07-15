@@ -3,9 +3,9 @@
 ## Objectives
 
 - Learn how to request and manage model access in the AWS Bedrock Console.
-- Navigate the Bedrock Playgrounds (Text, Chat, Image) and the Model Evaluation workbench.
-- Understand the region-specific availability of foundation models.
-- Set up logging for model invocation in your AWS account.
+- Navigate the Bedrock Model Catalog, Playgrounds, and the Model Evaluation workbench.
+- Understand Project-level and Account-level scopes inside Bedrock.
+- Analyze model specifications (context window, input/output limits, modalities, and pricing) from the catalog.
 
 ---
 
@@ -13,15 +13,18 @@
 
 Before a developer or program can invoke a model on Amazon Bedrock, access must be explicitly granted for that model in your AWS Account. FMs are supplied by independent companies, some of which require you to agree to specific EULAs (End User License Agreements) or provide contact details before using their services.
 
-### Region-Specific Availability
+### Project-level Scopes in Bedrock
 
-Amazon Bedrock does not host all models in all regions. AWS continuously rolls out models, meaning regions like `us-east-1` (N. Virginia) and `us-west-2` (Oregon) usually get access to new models first. When designing your deployment architecture, ensure the region hosting your application is identical to or has a low-latency connection to the region where your chosen model is enabled.
+Project scope allows developers to partition AI development resources, benchmarks, custom dashboards, and local playgrounds inside separate folders (like `default` or customized application projects).
 
-### Playground vs. Workbench vs. Endpoint
+### Catalog Metadata
 
-- **Playgrounds**: Interactive browser-based interfaces inside the AWS Console. Great for rapid prototyping, prompt engineering testing, and immediate evaluation.
-- **Model Evaluation (Workbench)**: A workflow to evaluate and compare different models based on accuracy, robustness, toxicity, and speed, using either automatic datasets or human reviewers.
-- **API Endpoint**: The programmable API server exposed by AWS Bedrock for production code integration.
+The Bedrock Model Catalog acts as a centralized directory. Each model card in the catalog presents crucial developer parameters:
+
+- **Context Window**: The maximum input length the model can process.
+- **Max Output**: The maximum response length supported.
+- **Input/Output Pricing**: The cost calculated per 1 million tokens.
+- **Modalities**: The supported input/output formats (e.g. Text, Image, Video).
 
 ---
 
@@ -46,31 +49,38 @@ The model access request and invocation control flow:
 
 ## AWS Console Walkthrough
 
-### Step 1: Navigating to Model Access
+### Step 1: Navigating the Model Catalog
 
 1. Open the **AWS Management Console**.
 2. Search for **Amazon Bedrock** and select it.
-3. On the left side navigation, click on **Model access**.
-4. You will see a table displaying all foundation models, their providers, and your current access status.
+3. In the left navigation sidebar under **Project Scope**, verify your active project (e.g., select `default` project).
+4. Click on the **Models** link. You will land on the **Model catalog** showing the active models page.
 
-![AWS Console - Bedrock Model Access](/assets/screenshots/002_model_access.png)
-*(Note: Please save a screenshot of your Model Access page at assets/screenshots/002_model_access.png to complete this walkthrough).*
+![AWS Console - Bedrock Model Catalog](/assets/screenshots/002_model_access.png)
 
-### Step 2: Requesting Access
+### Step 2: Evaluating Model Specifications
 
-1. Click **Modify model access** in the top right.
-2. Check the box next to **Anthropic Claude 3** and **Amazon Nova**.
-3. Scroll to the bottom and click **Next**.
-4. Review the terms and conditions, then click **Submit**.
-5. The status next to your checked models will update to **Access granted**.
+When selecting a model (such as the **GLM 5** card from provider **Z.AI**), a detailed specifications drawer will open on the right side showing:
 
-### Step 3: Using the Chat Playground
+- **Model ID**: `zai.glm-5`
+- **Context Window**: `200K tokens`
+- **Max Output**: `128K tokens`
+- **Pricing**: `$1.20 / 1M tokens` input, `$3.84 / 1M tokens` output.
+- **Description**: Optimized for complex systems engineering, math, coding, and long-context agentic tasks.
 
-1. In the left navigation, under **Playgrounds**, click **Chat**.
-2. Click **Select model** at the top.
-3. Set Category to **Anthropic** and Model to **Claude 3.5 Sonnet**, then click **Apply**.
-4. Type a message in the chat input and click **Run**.
-5. Observe the response latency and token count details.
+Other models available in the catalog include:
+
+- **Palmyra Vision 7B** (Multimodal: Text + Image input, text output; 4K context; $0.18/1M input).
+- **Qwen3 Coder Next** (Text-only; 256K context; $0.60/1M input).
+- **GLM 4.7 Flash** (Text-only; 203K context; $0.08/1M input).
+- **Kimi K2.5** (Multimodal: Text + Image input; 256K context; $0.72/1M input).
+
+### Step 3: Requesting Access
+
+1. Under the **Account Scope** section of the sidebar, select **Settings** or **Model access** (depending on your AWS region layout).
+2. Click **Modify model access** or **Enable model**.
+3. Select your chosen model (e.g. check the boxes next to `zai.glm-5` or `amazon.nova-lite-v1:0`).
+4. Click **Save changes** / **Submit** to grant access for your project scope.
 
 ---
 
@@ -78,10 +88,10 @@ The model access request and invocation control flow:
 
 ### 1. AWS CLI
 
-You can query metadata and limits (such as max output tokens and input support) for a specific model ID:
+You can query metadata and limits (such as max output tokens and input support) for a specific model ID from the catalog:
 
 ```bash
-aws bedrock get-foundation-model --model-identifier anthropic.claude-3-5-sonnet-20241022-v2:0 --region us-east-1
+aws bedrock get-foundation-model --model-identifier zai.glm-5 --region us-east-1
 ```
 
 ### 2. Ruby
@@ -95,7 +105,7 @@ client = Aws::Bedrock::Client.new(region: 'us-east-1')
 
 begin
   response = client.get_foundation_model(
-    model_identifier: 'anthropic.claude-3-5-sonnet-20241022-v2:0'
+    model_identifier: 'zai.glm-5'
   )
   details = response.model_details
   puts "Model: #{details.model_name}"
@@ -140,7 +150,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const modelId = searchParams.get("modelId") || "amazon.nova-lite-v1:0";
+  const modelId = searchParams.get("modelId") || "zai.glm-5";
 
   const client = new BedrockClient({ region: "us-east-1" });
 
@@ -197,55 +207,51 @@ resource "aws_iam_policy" "developer_read_only_policy" {
 
 ### Lab 2.1: Querying Model Capabilities via CLI
 
-1. Run the command: `aws bedrock get-foundation-model --model-identifier amazon.nova-lite-v1:0 --region us-east-1`
+1. Run the command: `aws bedrock get-foundation-model --model-identifier zai.glm-5 --region us-east-1`
 2. Check the output fields `responseStreamingSupported` and `customizationsSupported`.
 3. Note if this model supports continuous stream generation.
 
 ### Exercise
 
-Navigate to the AWS Console, open the Model Access page, and request access to **Meta Llama 3.3 70B Instruct**.
+Navigate to the AWS Console, open the Model Catalog, and locate the details for **Qwen3 Coder Next**. Record its context window and pricing structure.
 
 ---
 
 ## Quiz
 
-1. **Why might a model fail to run in region `eu-central-1` even though it is active in `us-east-1`?**
-   - A) AWS Bedrock has different credentials per region
-   - B) Models are rolled out to regions incrementally based on AWS GPU updates
-   - C) You must register a separate billing profile per region
-   - D) Anthropic only operates in US regions
+1. **Which context window size is reported for `zai.glm-5`?**
+   - A) 4K tokens
+   - B) 203K tokens
+   - C) 200K tokens
+   - D) 256K tokens
 
-2. **In which tool can you evaluate and compare models on accuracy and response speeds?**
-   - A) Model Access Console
-   - B) Chat Playground
-   - C) Model Evaluation Workbench
-   - D) CloudWatch Logs
+2. **In the Model Catalog view, what does the input price represent?**
+   - A) The cost per single model call
+   - B) The cost calculated per 1 million input tokens
+   - C) The monthly hosting fee for the model
+   - D) The cost per generated word
 
-3. **Which IAM action must be explicitly denied to prevent users from requesting new model accesses?**
-   - A) `bedrock:GetFoundationModel`
-   - B) `bedrock:ModifyModelAccess`
-   - C) `bedrock:InvokeModel`
-   - D) `bedrock:ListFoundationModels`
+3. **What is the project-level dropdown scope seen in the modern Bedrock sidebar?**
+   - A) Region Selector
+   - B) Project Scope (e.g. `default` project)
+   - C) Billing Account Scope
+   - D) IAM Role selector
 
 ### Answer Key
 
-1: B, 2: C, 3: B
+1: C, 2: B, 3: B
 
 ---
 
 ## Interview Questions
 
-**Q: If your backend returns an AccessDeniedException when calling `InvokeModel`, what are the first three things you should investigate?**
+**Q: In the Bedrock Console, how does project scope differ from account scope?**
 
-*Answer*:
-
-1. Check if the model access has been requested and granted in the Bedrock Console for that specific region.
-2. Verify that the IAM Role or User calling the API has `bedrock:InvokeModel` permission for that model resource.
-3. Verify that the correct AWS Region is specified in your client configuration.
+*Answer*: Project scope allows developers to partition AI development resources, benchmarks, custom dashboards, and local playgrounds inside separate folders (like `default` or customized application projects). Account scope refers to global configurations such as model access enablement, account-wide logging, billing, and global settings across the entire AWS account.
 
 ---
 
 ## Best Practices & Production Notes
 
-- **Access Segregation**: In multi-account enterprise structures, configure sandbox accounts with open model access for R&D, but restrict production accounts to only approved model IDs.
-- **Cost Tracking**: Request model access only for models that fit your security and cost parameters. Active models in your list do not cost anything unless invoked, but restriction prevents accidental high-cost model usage by developers.
+- **Model Selection Audits**: Regularly audit your model catalog configurations. Lightweight models like GLM 4.7 Flash or Qwen3 Coder offer lower latency and costs, which should be used unless complex reasoning capabilities of frontier models (like GLM 5 or Claude 3.5 Sonnet) are required.
+- **Monitoring Project Usage**: Make sure to tag and structure your Bedrock API keys under the appropriate project scope to ensure billing is allocated to the correct microservice or business unit.
