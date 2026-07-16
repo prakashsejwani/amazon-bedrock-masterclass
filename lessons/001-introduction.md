@@ -89,7 +89,11 @@ To begin using Amazon Bedrock, you must request access to the desired foundation
 ### 1. AWS CLI
 
 ```bash
+# Using the default profile
 aws bedrock list-foundation-models --region us-east-1 --output table
+
+# Using a named profile (e.g. bedrock)
+aws bedrock list-foundation-models --region us-east-1 --output table --profile bedrock
 ```
 
 ### 2. Ruby
@@ -189,7 +193,7 @@ resource "aws_iam_policy" "bedrock_list_policy" {
 ### Lab 1.1: Listing Bedrock Models with AWS CLI
 
 1. Configure your AWS credentials using `aws configure`.
-2. Run the command `aws bedrock list-foundation-models --query "modelSummaries[?outputModalities[?contains(@, 'TEXT')]].modelId" --output json` to list all text-based models.
+2. Run the command `aws bedrock list-foundation-models --query "modelSummaries[?outputModalities[?contains(@, 'TEXT')]].modelId" --output json` (append `--profile bedrock` if using a named profile) to list all text-based models.
 3. Save the output and note the exact Model IDs for **Claude** and **Nova**.
 
 ### Exercise
